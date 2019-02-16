@@ -17,7 +17,6 @@ function drawBoard() {
 }
 
 function addClickEvents() {
-
   // click on square on board
   $(document).on('click', '.board div', function () {
     if (gameOver) {
