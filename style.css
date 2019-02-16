@@ -1,0 +1,31 @@
+.board {
+  width: 99vh;
+  margin: 0 auto;
+}
+
+.board div {
+  width: 33vh;
+  height: 33vh;
+  background-color: #a00;
+  float: left;
+  color: #fff;
+  font-family: Verdana;
+  font-size: 33vh;
+  text-align: center;
+  cursor: pointer;
+  /* So we don't select the X and O:s by mistake*/
+  user-select: none;
+}
+
+/* Every odd box should have a different color */
+.board div:nth-child(odd){
+  background-color: #00a;
+}
+
+/* 
+  Don't let the 4:th and 7:th
+  box have anything to its left
+*/
+.board div:nth-child(3n+4){
+  clear:left;
+}
