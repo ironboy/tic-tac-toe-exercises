@@ -2,14 +2,16 @@
   box-sizing: border-box;
 }
 
-body, button {
+body{
   font-size: 22px;
   font-family: Verdana;
+  overflow: hidden;
 }
 
 button {
-  border-radius: 10px;
+  font-family: Verdana;
   font-size: 18px;
+  border-radius: 10px;
   cursor: pointer;
 }
 
