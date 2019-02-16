@@ -16,7 +16,7 @@ function addClickEvents() {
 
   // click on square on board
   $(document).on('click', '.board div', function () {
-    if(gameOver){
+    if (gameOver) {
       // the game is over so do nothing
       return;
     }
@@ -27,8 +27,9 @@ function addClickEvents() {
     $(this).text(player);
     // ternary operator to switch current player
     player = player === 'X' ? 'O' : 'X';
-    // check for win
+    // check for win or draw
     checkForWin();
+    checkForDraw();
   });
 
   // remove nice alert
@@ -67,6 +68,14 @@ function checkForWin() {
         gameOver = true;
       }
     }
+  }
+}
+
+function checkForDraw(){
+  let emptySquares = $('.board div:empty').length;
+  if(!gameOver && emptySquares === 0){
+    niceAlert('It is a draw!');
+    gameOver = true;
   }
 }
 
