@@ -1,5 +1,7 @@
 let gameOver = false;
 let player = 'X';
+// set computer player to 'X', 'O' or ''
+let computerPlayer = 'O';
 
 function drawBoard() {
   // add a new div inside the body
@@ -32,6 +34,7 @@ function addClickEvents() {
     // check for win or draw
     checkForWin();
     checkForDraw();
+    computerMove();
   });
 
   // remove nice alert
@@ -76,25 +79,37 @@ function checkForWin() {
   }
 }
 
-function checkForDraw(){
+function checkForDraw() {
   let emptySquares = $('.board div:empty').length;
-  if(!gameOver && emptySquares === 0){
+  if (!gameOver && emptySquares === 0) {
     niceAlert('It is a draw!');
     gameOver = true;
   }
 }
 
 function niceAlert(text) {
+  if($('.niceAlert').length > 0){ return; }
   $('body').append('<div class="niceAlert">' + text + '</div>');
   $('.niceAlert').append('<button>OK</button>');
 }
 
-function restart(){
+function restart() {
   $('.board div').empty();
   gameOver = false;
   player = 'X';
 }
 
+function computerMove() {
+  if (computerPlayer === player && !gameOver) {
+    let emptySquares = $('.board div:empty').length;
+    while (emptySquares === $('.board div:empty').length) {
+      let move = Math.floor(Math.random() * 9);
+      $('.board div').eq(move).click();
+    }
+  }
+}
+
 // Start everything
 drawBoard();
 addClickEvents();
+computerMove();
