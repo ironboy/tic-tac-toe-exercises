@@ -1,18 +1,18 @@
-function drawBoard(){
+function drawBoard() {
   // add a new div inside the body
   // with the class name board
   $('body').append('<div class="board"/>');
   // add nine divs inside the div 
   // with the class name board
-  for(let i = 0; i < 9; i++){
+  for (let i = 0; i < 9; i++) {
     $('.board').append('<div/>');
   }
 }
 
-function addClickEvent(){
+function addClickEvent() {
   let player = 'X';
-  $(document).on('click', '.board div', function(){
-    if($(this).text() !== ''){
+  $(document).on('click', '.board div', function () {
+    if ($(this).text() !== '') {
       // the div is not empty so do nothing
       return;
     }
@@ -24,7 +24,7 @@ function addClickEvent(){
   });
 }
 
-function checkForWin(){
+function checkForWin() {
   let colors = ['X', 'O'];
   let winningCombos = [
     [0, 1, 2],
@@ -39,21 +39,21 @@ function checkForWin(){
   let board = [];
   // loop through each div in the board
   // using jQuery:s each method
-  $('.board div').each(function(){
+  $('.board div').each(function () {
     board.push($(this).text());
   });
   // now check both colors for all combos
-  for(let color of colors){
-    for(let combo of winningCombos){
-      if(
+  for (let color of colors) {
+    for (let combo of winningCombos) {
+      if (
         board[combo[0]] === color &&
         board[combo[1]] === color &&
         board[combo[2]] === color
-      ){
+      ) {
         // Wait 1 millisecond before
         // our alert so that the
         // board is redrawn...
-        setTimeout(function(){
+        setTimeout(function () {
           alert(color + ' has won!');
         }, 1);
       }
