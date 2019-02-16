@@ -1,17 +1,18 @@
 let gameOver = false;
 let player = 'X';
-let numberOfPiecesPerPlayer = 3;
+let numberOfPiecesPerPlayer = Infinity;
+let bigBoard = true;
 // set computer player to 'X', 'O' or ''
 let computerPlayer = 'O';
-
 
 function drawBoard() {
   // add a new div inside the body
   // with the class name board
   $('body').append('<div class="board"/>');
-  // add nine divs inside the div 
-  // with the class name board
-  for (let i = 0; i < 9; i++) {
+  if(bigBoard){
+    $('.board').addClass('bigBoard');
+  }
+  for (let i = 0; i < (bigBoard ? 625 : 9); i++) {
     $('.board').append('<div/>');
   }
   // add a restart button
@@ -44,13 +45,12 @@ function addClickEvents() {
     }
     $(this).text(player);
     $('.selected').removeClass('selected').empty();
-    // ternary operator to switch current player
-    player = player === 'X' ? 'O' : 'X';
     // check for win or draw
     checkForWin();
     checkForDraw();
-    computerMove();
     showHowToMove();
+    player = player === 'X' ? 'O' : 'X';
+    computerMove();
   });
 
   // remove nice alert
@@ -63,29 +63,27 @@ function addClickEvents() {
 }
 
 function checkForWin() {
-  let colors = ['X', 'O'];
-  let winningCombos = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-  ];
+  let inRowToWin = bigBoard ? 5 : 3;
+  let perRow = bigBoard ? 25 : 3;
   let board = boardAsString();
-  // now check both colors for all combos
-  for (let color of colors) {
-    for (let combo of winningCombos) {
-      if (
-        board[combo[0]] === color &&
-        board[combo[1]] === color &&
-        board[combo[2]] === color
-      ) {
-        niceAlert(color + ' has won!');
-        gameOver = true;
-      }
+  for(let square = 0; square < perRow ** 2; square++){
+    let horizontalWin = true;
+    let verticalWin = true;
+    let diagonalWin1 = true;
+    let diagonalWin2 = true;
+    for(let i = 0; i < inRowToWin; i++){
+      horizontalWin = horizontalWin && board[square + i] === player;
+      verticalWin = verticalWin && board[square + i * perRow] === player;
+      diagonalWin1 = diagonalWin1 && board[square + i * perRow + i] === player;
+      diagonalWin2 = diagonalWin2 && board[square + i * perRow - i] === player;
+      
+    }
+    horizontalWin = horizontalWin && square % perRow <= perRow - inRowToWin;
+    diagonalWin1 = diagonalWin1 && square % perRow <= perRow - inRowToWin;
+    diagonalWin2 = diagonalWin2 && square % perRow >= inRowToWin - 1;
+    if(horizontalWin || verticalWin || diagonalWin1 || diagonalWin2){
+      gameOver = true;
+      niceAlert(player + ' won!');
     }
   }
 }
@@ -115,7 +113,7 @@ function computerMove() {
   if (computerPlayer === player && !gameOver) {
     let board = boardAsString();
     while (board === boardAsString()) {
-      let move = Math.floor(Math.random() * 9);
+      let move = Math.floor(Math.random() * (bigBoard ? 625 : 9));
       $('.board div').eq(move).click();
     }
   }

@@ -48,6 +48,20 @@ button {
   clear:left;
 }
 
+.bigBoard div {
+  width: 3.82vh;
+  height: 3.82vh;
+  font-size: 3.82vh;
+}
+
+.bigBoard div:nth-child(3n+4){
+  clear:none;
+}
+
+.bigBoard div:nth-child(25n+26){
+  clear:left;
+}
+
 .niceAlert {
   position: absolute;
   left: 30%;
