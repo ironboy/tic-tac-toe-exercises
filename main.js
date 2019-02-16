@@ -9,7 +9,7 @@ function drawBoard() {
   // add a new div inside the body
   // with the class name board
   $('body').append('<div class="board"/>');
-  if(bigBoard){
+  if (bigBoard) {
     $('.board').addClass('bigBoard');
   }
   for (let i = 0; i < (bigBoard ? 625 : 9); i++) {
@@ -66,22 +66,22 @@ function checkForWin() {
   let inRowToWin = bigBoard ? 5 : 3;
   let perRow = bigBoard ? 25 : 3;
   let board = boardAsString();
-  for(let square = 0; square < perRow ** 2; square++){
+  for (let square = 0; square < perRow ** 2; square++) {
     let horizontalWin = true;
     let verticalWin = true;
     let diagonalWin1 = true;
     let diagonalWin2 = true;
-    for(let i = 0; i < inRowToWin; i++){
+    for (let i = 0; i < inRowToWin; i++) {
       horizontalWin = horizontalWin && board[square + i] === player;
       verticalWin = verticalWin && board[square + i * perRow] === player;
       diagonalWin1 = diagonalWin1 && board[square + i * perRow + i] === player;
       diagonalWin2 = diagonalWin2 && board[square + i * perRow - i] === player;
-      
+
     }
     horizontalWin = horizontalWin && square % perRow <= perRow - inRowToWin;
     diagonalWin1 = diagonalWin1 && square % perRow <= perRow - inRowToWin;
     diagonalWin2 = diagonalWin2 && square % perRow >= inRowToWin - 1;
-    if(horizontalWin || verticalWin || diagonalWin1 || diagonalWin2){
+    if (horizontalWin || verticalWin || diagonalWin1 || diagonalWin2) {
       gameOver = true;
       niceAlert(player + ' won!');
     }
@@ -131,7 +131,7 @@ function showHowToMove() {
   let allPiecesInPlay =
     $('.board div:contains("' + player + '")').length >=
     numberOfPiecesPerPlayer;
-  if(allPiecesInPlay){
+  if (allPiecesInPlay) {
     $('.howToMove').show();
   }
 }
