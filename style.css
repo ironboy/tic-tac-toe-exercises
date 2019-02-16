@@ -4,12 +4,13 @@
 
 body, button {
   font-size: 22px;
-font-family: Verdana;
+  font-family: Verdana;
 }
 
 button {
   border-radius: 10px;
   font-size: 18px;
+  cursor: pointer;
 }
 
 .board {
@@ -60,4 +61,10 @@ button {
 .niceAlert button {
   display: block;
   margin: 20px auto 0;
+}
+
+.restart {
+  position: absolute;
+  top: 30px;
+  left: 30px;
 }

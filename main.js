@@ -1,4 +1,5 @@
 let gameOver = false;
+let player = 'X';
 
 function drawBoard() {
   // add a new div inside the body
@@ -9,10 +10,11 @@ function drawBoard() {
   for (let i = 0; i < 9; i++) {
     $('.board').append('<div/>');
   }
+  // add a restart button
+  $('body').append('<button class="restart">Restart game</button>');
 }
 
 function addClickEvents() {
-  let player = 'X';
 
   // click on square on board
   $(document).on('click', '.board div', function () {
@@ -36,6 +38,9 @@ function addClickEvents() {
   $(document).on('click', '.niceAlert button', function () {
     $('.niceAlert').remove();
   });
+
+  // restart
+  $(document).on('click', '.restart', restart);
 }
 
 function checkForWin() {
@@ -82,6 +87,12 @@ function checkForDraw(){
 function niceAlert(text) {
   $('body').append('<div class="niceAlert">' + text + '</div>');
   $('.niceAlert').append('<button>OK</button>');
+}
+
+function restart(){
+  $('.board div').empty();
+  gameOver = false;
+  player = 'X';
 }
 
 // Start everything
