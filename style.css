@@ -1,16 +1,31 @@
+* {
+  box-sizing: border-box;
+}
+
+body, button {
+  font-size: 22px;
+font-family: Verdana;
+}
+
+button {
+  border-radius: 10px;
+  font-size: 18px;
+}
+
 .board {
-  width: 99vh;
+  padding-top: 2vh;
+  width: 96vh;
   margin: 0 auto;
 }
 
 .board div {
-  width: 33vh;
-  height: 33vh;
+  width: 32vh;
+  height: 32vh;
   background-color: #a00;
   float: left;
   color: #fff;
   font-family: Verdana;
-  font-size: 33vh;
+  font-size: 32vh;
   text-align: center;
   cursor: pointer;
   /* So we don't select the X and O:s by mistake*/
@@ -28,4 +43,21 @@
 */
 .board div:nth-child(3n+4){
   clear:left;
+}
+
+.niceAlert {
+  position: absolute;
+  left: 30%;
+  top: 30%;
+  width: 40%;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 10px 10px 34px 0px rgba(0,0,0,0.4);
+  text-align: center;
+}
+
+.niceAlert button {
+  display: block;
+  margin: 20px auto 0;
 }

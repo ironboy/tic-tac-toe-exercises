@@ -9,8 +9,10 @@ function drawBoard() {
   }
 }
 
-function addClickEvent() {
+function addClickEvents() {
   let player = 'X';
+
+  // click on square on board
   $(document).on('click', '.board div', function () {
     if ($(this).text() !== '') {
       // the div is not empty so do nothing
@@ -21,6 +23,11 @@ function addClickEvent() {
     player = player === 'X' ? 'O' : 'X';
     // check for win
     checkForWin();
+  });
+
+  // remove nice alert
+  $(document).on('click', '.niceAlert button', function () {
+    $('.niceAlert').remove();
   });
 }
 
@@ -50,17 +57,17 @@ function checkForWin() {
         board[combo[1]] === color &&
         board[combo[2]] === color
       ) {
-        // Wait 1 millisecond before
-        // our alert so that the
-        // board is redrawn...
-        setTimeout(function () {
-          alert(color + ' has won!');
-        }, 1);
+        niceAlert(color + ' has won!');
       }
     }
   }
 }
 
+function niceAlert(text) {
+  $('body').append('<div class="niceAlert">' + text + '</div>');
+  $('.niceAlert').append('<button>OK</button>');
+}
+
 // Start everything
 drawBoard();
-addClickEvent();
+addClickEvents();
