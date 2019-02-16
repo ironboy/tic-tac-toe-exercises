@@ -1,3 +1,5 @@
+let gameOver = false;
+
 function drawBoard() {
   // add a new div inside the body
   // with the class name board
@@ -14,6 +16,10 @@ function addClickEvents() {
 
   // click on square on board
   $(document).on('click', '.board div', function () {
+    if(gameOver){
+      // the game is over so do nothing
+      return;
+    }
     if ($(this).text() !== '') {
       // the div is not empty so do nothing
       return;
@@ -58,6 +64,7 @@ function checkForWin() {
         board[combo[2]] === color
       ) {
         niceAlert(color + ' has won!');
+        gameOver = true;
       }
     }
   }
