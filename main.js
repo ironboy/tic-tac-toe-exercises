@@ -1,7 +1,9 @@
 let gameOver = false;
 let player = 'X';
+let numberOfPiecesPerPlayer = 3;
 // set computer player to 'X', 'O' or ''
 let computerPlayer = 'O';
+
 
 function drawBoard() {
   // add a new div inside the body
@@ -14,26 +16,41 @@ function drawBoard() {
   }
   // add a restart button
   $('body').append('<button class="restart">Restart game</button>');
+  // add a "how to move your pieces" explanation
+  $('body').append('<div class="howToMove">You have played all your pieces. Move a piece by clicking it and then clicking an empty square.');
 }
 
 function addClickEvents() {
   // click on square on board
   $(document).on('click', '.board div', function () {
+    let allPiecesInPlay =
+      $('.board div:contains("' + player + '")').length >=
+      numberOfPiecesPerPlayer;
     if (gameOver) {
       // the game is over so do nothing
+      return;
+    }
+    if (allPiecesInPlay && $(this).text() === player) {
+      $('.selected').removeClass('selected');
+      $(this).addClass('selected');
       return;
     }
     if ($(this).text() !== '') {
       // the div is not empty so do nothing
       return;
     }
+    if (allPiecesInPlay && $('.selected').length === 0) {
+      return;
+    }
     $(this).text(player);
+    $('.selected').removeClass('selected').empty();
     // ternary operator to switch current player
     player = player === 'X' ? 'O' : 'X';
     // check for win or draw
     checkForWin();
     checkForDraw();
     computerMove();
+    showHowToMove();
   });
 
   // remove nice alert
@@ -57,12 +74,7 @@ function checkForWin() {
     [0, 4, 8],
     [2, 4, 6]
   ];
-  let board = [];
-  // loop through each div in the board
-  // using jQuery:s each method
-  $('.board div').each(function () {
-    board.push($(this).text());
-  });
+  let board = boardAsString();
   // now check both colors for all combos
   for (let color of colors) {
     for (let combo of winningCombos) {
@@ -87,24 +99,42 @@ function checkForDraw() {
 }
 
 function niceAlert(text) {
-  if($('.niceAlert').length > 0){ return; }
+  if ($('.niceAlert').length > 0) { return; }
   $('body').append('<div class="niceAlert">' + text + '</div>');
   $('.niceAlert').append('<button>OK</button>');
 }
 
 function restart() {
   $('.board div').empty();
+  $('.howToMove').hide();
   gameOver = false;
   player = 'X';
 }
 
 function computerMove() {
   if (computerPlayer === player && !gameOver) {
-    let emptySquares = $('.board div:empty').length;
-    while (emptySquares === $('.board div:empty').length) {
+    let board = boardAsString();
+    while (board === boardAsString()) {
       let move = Math.floor(Math.random() * 9);
       $('.board div').eq(move).click();
     }
+  }
+}
+
+function boardAsString() {
+  let emptySquares = $('.board div:empty');
+  emptySquares.text(' ');
+  let str = $('.board').text();
+  emptySquares.text('');
+  return str;
+}
+
+function showHowToMove() {
+  let allPiecesInPlay =
+    $('.board div:contains("' + player + '")').length >=
+    numberOfPiecesPerPlayer;
+  if(allPiecesInPlay){
+    $('.howToMove').show();
   }
 }
 

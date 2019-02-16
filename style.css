@@ -70,3 +70,17 @@ button {
   top: 30px;
   left: 30px;
 }
+
+.selected {
+  opacity: 0.7;
+}
+
+.howToMove {
+  display: none;
+  position:absolute;
+  top: 70px;
+  left: 40px;
+  width: 110px;
+  font-size: 11px;
+  line-height: 130%;
+}
